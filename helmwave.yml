@@ -19,7 +19,7 @@ repositories:
 .options: &options
   namespace: system
   wait: true
-  timeout: 300s
+  timeout: 50s
   create_namespace: true
 
 releases:
@@ -72,10 +72,14 @@ releases:
       - values/kube-prometheus-stack.yml
     depends_on:
       - ingress-nginx@system
+      - security@system
+  - name: security
+    chart: charts/security
+    values:
+      - values/security.yml
+    <<: *options
   - name: monitoring-config
     chart: charts/monitoring-config
-    values:
-      - values/monitoring-config.yml
     <<: *options
     depends_on:
       - kube-prometheus-stack@system

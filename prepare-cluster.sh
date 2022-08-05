@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e
 
-# namespace для системных приложений
-kubectl create ns system && true
-
 # namespace для отдельных инсталляция платформы
 kubectl create ns production && true
 kubectl create ns stage1 && true
