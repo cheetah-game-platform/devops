@@ -1,0 +1,14 @@
+gameservers:
+  namespaces:
+    - production
+    - stage1
+    - stage1
+    - stage2
+    - stage3
+    - stage4
+    - stage5
+agones:
+  ping:
+    install: false
+  allocator:
+    install: false

@@ -1,0 +1,71 @@
+prometheus:
+  prometheusSpec:
+    podMonitorSelector:
+      matchLabels:
+        monitor: cheetah
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: [ "ReadWriteOnce" ]
+          resources:
+            requests:
+              storage: 50Gi
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt"
+      nginx.ingress.kubernetes.io/auth-type: basic
+      nginx.ingress.kubernetes.io/auth-secret: system/prometheus-web-auth-secret
+      nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+    ingressClassName: nginx
+    pathType: ImplementationSpecific
+    enabled: true
+    hosts:
+      - prometheus.{{ requiredEnv "HOST" }}
+    tls:
+      - hosts:
+        - prometheus.{{ requiredEnv "HOST" }}
+        secretName: prometheus-ingress
+grafana:
+  adminUser: admin
+  adminPassword: {{ requiredEnv "GRAFANA_ADMIN_PASSWORD" }}
+  replicas: 1
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt"
+    ingressClassName: nginx
+    pathType: ImplementationSpecific
+    enabled: true
+    hosts:
+      - grafana.{{ requiredEnv "HOST" }}
+    tls:
+      - hosts:
+        - grafana.{{ requiredEnv "HOST" }}
+        secretName: grafana-ingress
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      url: http://system-loki:3100
+  sidecar:
+    dashboards:
+      enabled: true
+  persistence:
+    enabled: true
+    accessModes: [ "ReadWriteOnce" ]
+    size: 5Gi
+alertmanager:
+  enabled: true
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt"
+      nginx.ingress.kubernetes.io/auth-type: basic
+      nginx.ingress.kubernetes.io/auth-secret: system/prometheus-web-auth-secret
+      nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+    ingressClassName: nginx
+    pathType: ImplementationSpecific
+    enabled: true
+    hosts:
+      - alertmanager.{{ requiredEnv "HOST" }}
+    tls:
+      - hosts:
+        - alertmanager.{{ requiredEnv "HOST" }}
+        secretName: alertmanager-ingress
