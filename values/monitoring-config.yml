@@ -1,0 +1,1 @@
+prometheusAdminAuth: {{ requiredEnv "PROMETHEUS_ADMIN_AUTH" }}

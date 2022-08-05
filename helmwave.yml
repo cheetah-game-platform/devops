@@ -33,8 +33,17 @@ releases:
     version: 4.1.0
     chart: ingress-nginx/ingress-nginx
     <<: *options
+    depends_on:
+      - cert-manager@system
     values:
       - values/nginx.yml
+  - name: issues
+    chart: charts/issuer
+    value:
+      - values/issuer.yml
+    <<: *options
+    depends_on:
+      - cert-manager@system
   - name: loki
     version: 2.12.2
     chart: loki/loki
@@ -61,4 +70,13 @@ releases:
     <<: *options
     values:
       - values/kube-prometheus-stack.yml
+    depends_on:
+      - ingress-nginx@system
+  - name: monitoring-config
+    chart: charts/monitoring-config
+    values:
+      - values/monitoring-config.yml
+    <<: *options
+    depends_on:
+      - kube-prometheus-stack@system
 
