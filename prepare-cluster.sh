@@ -9,6 +9,14 @@ kubectl create ns stage3 && true
 kubectl create ns stage4 && true
 kubectl create ns stage5 && true
 
+./prepare-namespace.sh stage1
+./prepare-namespace.sh stage2
+./prepare-namespace.sh stage3
+./prepare-namespace.sh stage4
+./prepare-namespace.sh stage5
+
+
+
 base_domain=$1
 cluster_issuer_email=$2
 prometheus_admin_password=$3
