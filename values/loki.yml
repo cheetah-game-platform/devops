@@ -1,7 +1,11 @@
-podAnnotations:
-  linkerd.io/inject: enabled
-persistence:
-  enabled: true
-  accessModes:
-    - ReadWriteOnce
-  size: 10Gi
+loki:
+  auth_enabled: false
+  commonConfig:
+    replication_factor: 1
+  storage:
+    type: 'filesystem'
+  rulerConfig:
+    storage:
+      type: 'local'
+      local:
+        directory: '/var/loki/rules'

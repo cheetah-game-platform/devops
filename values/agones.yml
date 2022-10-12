@@ -1,6 +1,7 @@
 gameservers:
   namespaces:
     - production
+    - main
     - stage1
     - stage1
     - stage2

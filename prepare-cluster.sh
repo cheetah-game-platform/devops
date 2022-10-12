@@ -3,12 +3,15 @@ set -e
 
 # namespace для отдельных инсталляция платформы
 kubectl create ns production && true
+kubectl create ns main && true
 kubectl create ns stage1 && true
 kubectl create ns stage2 && true
 kubectl create ns stage3 && true
 kubectl create ns stage4 && true
 kubectl create ns stage5 && true
 
+./prepare-namespace.sh production
+./prepare-namespace.sh main
 ./prepare-namespace.sh stage1
 ./prepare-namespace.sh stage2
 ./prepare-namespace.sh stage3

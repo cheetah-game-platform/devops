@@ -44,7 +44,7 @@ grafana:
   additionalDataSources:
     - name: Loki
       type: loki
-      url: http://system-loki:3100
+      url: http://loki.system:3100
   sidecar:
     dashboards:
       enabled: true
